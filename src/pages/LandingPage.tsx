@@ -14,7 +14,9 @@ export default function LandingPage() {
                 </h2>  
                 <Button 
                     size="lg" 
-                    className="px-12 py-6 text-xl font-bold mt-8 cursor-pointer"
+                    className="px-12 py-6 text-xl font-bold mt-8 cursor-pointer
+                        
+                    "
                     onClick={() => setLocation('/camera')}
                 >
                     Start

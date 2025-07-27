@@ -31,7 +31,7 @@ function CameraRoom() {
       <div className="w-full min-h-full pb-12 md:py-12 bg-black/5">
         <div className="max-w-3xl px-4 mx-auto">
           <section className="w-full flex-col md:flex-row flex gap-8 mx-auto">
-            <div className="aspect-video lg:h-[300px] bg-white rounded shadow-md p-2">
+            <div className="aspect-video lg:h-[300px] bg-white rounded shadow p-2">
               <Webcam 
                 className="w-full h-full rounded"
                 ref={webcamRef}

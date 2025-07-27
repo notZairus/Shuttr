@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     return (
         <>
-            <header className="w-full py-4 h-16 justify-between items-center px-8 shadow text-primary bg-background 
+            <header className="w-full py-4 h-16 justify-between items-center px-8 bg-foreground text-background shadow
                 hidden sm:flex absolute
             ">
                 <h1 className="text-2xl font-black font-mono">Shuttr.</h1>
