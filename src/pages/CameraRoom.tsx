@@ -1,6 +1,7 @@
 import Webcam from "react-webcam";
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Camera, Trash } from "lucide-react";
 
 
 
@@ -46,21 +47,21 @@ function CameraRoom() {
               />
             </div>
             <div className="flex-1 flex flex-col gap-4 items-center">
-              <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer" size="lg"
+
+              <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer flex items-center justify-center" size="lg"
                 onClick={takeAPic}
               >
-                Take a Pic
+                <Camera className="size-6"/>
+                <p>Take a Pick</p>
               </Button>
   
-              <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer" size="lg" variant="outline">
-                Ewan
-              </Button>
-  
-              <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer" size="lg" variant="destructive"
+              <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer flex items-center justify-center" size="lg" variant="destructive"
                 onClick={clearImages}
               >
-                Clear Images
+                <Trash className="size-6"/>
+                <p>Clear Images</p>
               </Button>
+
             </div>
           </section>
           { images.length > 0 && 
