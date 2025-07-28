@@ -111,7 +111,7 @@ function CameraRoom() {
               <div className="w-full bg-white p-2 rounded shadow-md flex flex-col md:flex-row gap-4 items-end">
                 { images.map((imageSrc: string) => (
                     <div className="rounded overflow-hidden flex-1 md:max-w-1/5 bg-red-400 aspect-video border">
-                      <img src={imageSrc} alt="" className="w-full h-full object-fit"/>
+                      <img src={imageSrc} alt="" className="w-full h-full object-cover"/>
                     </div>
                   ))
                 }
