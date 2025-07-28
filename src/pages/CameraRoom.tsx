@@ -1,8 +1,14 @@
 import Webcam from "react-webcam";
 import { useRef, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Image, Images, Trash } from "lucide-react";
+import { Image, Images, Trash, Pause } from "lucide-react";
 import { useImageContext } from "@/contexts/ImageContext";
+import { useLocation } from "wouter";
+
+
+interface ReactWebcam {
+  getScreenshot: () => string
+}
 
 
 function sleep(seconds: number) {
@@ -13,12 +19,13 @@ function sleep(seconds: number) {
   })
 }
 
-
 function CameraRoom() {
+  const [, setLocation] = useLocation();
   const { images, setImages } = useImageContext();
-  const webcamRef = useRef<any>(null);
+  const webcamRef = useRef<ReactWebcam & Webcam | null>(null);
   const [timer, setTimer] = useState(0);
   const [taking, setTaking] = useState(false);
+  const takingRef = useRef(false);
 
   const noImageSlot = images.length === 4;
 
@@ -30,22 +37,30 @@ function CameraRoom() {
     setImages(images => [...images, imgSrc]);
   }
 
+  function pause() {
+    setTaking(false);
+    takingRef.current = false;
+  }
+
 
   async function takeMultipleShots() {
     if (noImageSlot) return;
     
     setTaking(true);
+    takingRef.current = true;
     for (let i = 0; i < 4 - images.length; i++) {
       for (let j = 3; j >= 0; j--) {
         setTimer(j);
         await sleep(1);
+        if (!takingRef.current) {
+          setTaking(false);
+          return;
+        }
       }
-
       takeAShot();
     }
     setTaking(false);
-  };
-
+  }
 
   const clearImages = useCallback(async() => {
     setImages([]);
@@ -55,7 +70,7 @@ function CameraRoom() {
     <>
       <div className="w-full min-h-full pb-12 md:py-12 bg-black/5 ">
         <div className="md:max-w-4xl mx-auto">
-          <section className="flex-col px-4 md:flex-row flex gap-8 mx-auto">
+          <section className="flex-col px-4 md:px-0 md:flex-row flex gap-8 mx-auto">
             <div className="bg-white rounded shadow p-2 relative">
 
               {taking && (
@@ -91,12 +106,23 @@ function CameraRoom() {
                 <p>take a shot</p>
               </Button>
 
-              <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer" size="lg"
-                onClick={takeMultipleShots}
-              >
-                <Images className="size-6"/>
-                <p>take {4 - images.length > 1 ? `${4 - images.length} shots` : `${4 - images.length} shot` }</p>
-              </Button>
+              { images.length < 4 && !taking && 
+                <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer" size="lg"
+                  onClick={takeMultipleShots}
+                >
+                  <Images className="size-6"/>
+                  <p>take {4 - images.length > 1 ? `${4 - images.length} shots` : `${4 - images.length} shot` }</p>
+                </Button>
+              }
+
+              { taking && 
+                <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer flex items-center justify-center" size="lg" variant="destructive"
+                  onClick={pause}
+                >
+                  <Pause className="size-6"/>
+                  <p>Stop</p>
+                </Button>
+              }
   
               <Button className="w-10/12 md:w-full py-8 text-lg font-semibold cursor-pointer flex items-center justify-center" size="lg" variant="destructive"
                 onClick={clearImages}
@@ -109,19 +135,23 @@ function CameraRoom() {
           </section>
           { images.length > 0 && 
             <section className="w-11/12 md:w-full mx-auto mt-8 ">
-              <div className="bg-white w-11/12 mx-auto p-4 rounded shadow-md h-min flex flex-col md:flex-row gap-4 items-end">
+              <div className="bg-white p-4 rounded shadow-md h-min flex flex-col md:flex-row gap-4 items-end">
                 { images.map((imageSrc: string) => (
-
-                    <div className="bg-white relative">
-                      <img src={imageSrc} alt="" className="h-[200px] md:h-[300px] w-full aspect-video object-cover rounded scale-x-[-1] md:scale-x-[1]"/>
+                    <div className="rounded aspect-video flex-1 overflow-hidden md:max-w-1/5 bg-red-400 border">
+                      <img src={imageSrc} alt="" className="w-full h-full object-cover scale-x-[-1]"/>
                     </div>
-                    // <div className="rounded  overflow-hidden md:max-w-1/5 bg-red-400 border">
-                    //   <img src={imageSrc} alt="" className="w-full h-full object-cover scale-x-[-1]"/>
-                    // </div>
                   ))
                 }
+                {/* { images.map((imageSrc: string) => (
+                    <div className="rounded overflow-hidden flex-1 md:max-w-1/5 bg-red-400 aspect-video border">
+                      <img src={imageSrc} alt="" className="w-full h-full object-cover"/>
+                    </div>
+                  ))
+                } */}
                 { noImageSlot && 
-                  <Button className="h-full max-w-24 wrap-break-word">
+                  <Button className="h-full max-w-24 wrap-break-word"
+                    onClick={() => setLocation('/customize')}
+                  >
                     Customize <br/> Strip
                   </Button> 
                 }
