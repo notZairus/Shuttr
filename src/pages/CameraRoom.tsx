@@ -1,62 +1,72 @@
 import Webcam from "react-webcam";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Image, Images, Trash } from "lucide-react";
 import { useImageContext } from "@/contexts/ImageContext";
 
 
+function sleep(seconds: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('finished');
+    }, seconds * 1000);
+  })
+}
+
 
 function CameraRoom() {
   const { images, setImages } = useImageContext();
-  const [taking, setTaking] = useState<boolean>(false);
   const webcamRef = useRef<any>(null);
+  const [timer, setTimer] = useState(0);
+  const [taking, setTaking] = useState(false);
 
   const noImageSlot = images.length === 4;
 
-  function takeAShot() {
+  const takeAShot = useCallback(() => {
     if (!webcamRef.current) return;
     if (noImageSlot) return;
 
     const imgSrc = webcamRef.current.getScreenshot();
-    setImages([...images, imgSrc]);
-  }
+    setImages(images => [...images, imgSrc]);
+  }, []);
 
-  function takeMultipleShots() {
+
+  const takeMultipleShots = useCallback(async() => {
+    if (noImageSlot) return;
+    
     setTaking(true);
-  }
+    for (let i = 0; i < 4 - images.length; i++) {
+      for (let j = 3; j >= 0; j--) {
+        setTimer(j);
+        await sleep(1);
+      }
 
-  function clearImages() {
-    setImages([]);
-  }
-
-  
-  useEffect(() => {
-    if (!taking) return;
-
-    const interval = setInterval(() => {
-      const imgSrc = webcamRef.current.getScreenshot();
-      setImages(prev => {
-        if (prev.length >= 4 - 1) {
-          setTaking(false);
-          clearInterval(interval);
-        }
-        return [...prev, imgSrc];
-      });
-    }, 3000);
-
-    return () => {
-      clearInterval(interval);
+      takeAShot();
     }
-  }, [taking])
-  
+    setTaking(false);
+  }, [images]);
 
+
+  const clearImages = useCallback(async() => {
+    setImages([]);
+  }, []);
 
   return (
     <>
-      <div className="w-full min-h-full pb-12 md:py-12 bg-black/5">
-        <div className="md:max-w-3xl px-4 mx-auto">
-          <section className="w-full flex-col md:flex-row flex gap-8 mx-auto">
-            <div className="aspect-video lg:h-[300px] bg-white rounded shadow p-2">
+      <div className="w-full min-h-full pb-12 md:py-12 bg-black/5 ">
+        <div className="md:max-w-4xl mx-auto">
+          <section className="w-full flex-col px-4 md:px-0 md:flex-row flex gap-8 mx-auto ">
+            <div className="aspect-video lg:h-[300px] bg-white rounded shadow p-2 relative">
+              {taking && (
+                timer > 0 ?
+              
+                <div className="absolute flex items-center justify-center aspect-square w-1/5 rounded-full text-foregound bg-background/50 top-1/2 left-1/2 -translate-1/2">
+                  <p className="text-4xl font-semibold">{timer}</p>
+                </div> :
+
+                <div className="bg-white absolute inset-0" />
+              )}
+
               <Webcam 
                 className="w-full h-full rounded"
                 ref={webcamRef}
