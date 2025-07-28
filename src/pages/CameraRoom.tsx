@@ -22,16 +22,16 @@ function CameraRoom() {
 
   const noImageSlot = images.length === 4;
 
-  const takeAShot = useCallback(() => {
+  function takeAShot() {
     if (!webcamRef.current) return;
     if (noImageSlot) return;
 
     const imgSrc = webcamRef.current.getScreenshot();
     setImages(images => [...images, imgSrc]);
-  }, []);
+  }
 
 
-  const takeMultipleShots = useCallback(async() => {
+  async function takeMultipleShots() {
     if (noImageSlot) return;
     
     setTaking(true);
@@ -44,7 +44,7 @@ function CameraRoom() {
       takeAShot();
     }
     setTaking(false);
-  }, [images]);
+  };
 
 
   const clearImages = useCallback(async() => {
@@ -55,20 +55,21 @@ function CameraRoom() {
     <>
       <div className="w-full min-h-full pb-12 md:py-12 bg-black/5 ">
         <div className="md:max-w-4xl mx-auto">
-          <section className="w-full flex-col px-4 md:px-0 md:flex-row flex gap-8 mx-auto ">
-            <div className="aspect-video rotate-90 md:rotate-0 lg:h-[300px] bg-white rounded shadow p-2 relative">
+          <section className="flex-col px-4 md:flex-row flex gap-8 mx-auto">
+            <div className="bg-white rounded shadow p-2 relative">
+
               {taking && (
                 timer > 0 ?
               
-                <div className="absolute flex items-center justify-center aspect-square w-1/5 rounded-full text-foregound bg-background/50 top-1/2 left-1/2 -translate-1/2">
+                <div className="z-10 absolute flex items-center justify-center aspect-square w-1/5 rounded-full text-foregound bg-background/50 top-1/2 left-1/2 -translate-1/2">
                   <p className="text-4xl font-semibold">{timer}</p>
                 </div> :
 
-                <div className="bg-white absolute inset-0" />
+                <div className="bg-white absolute inset-0 z-10" />
               )}
 
               <Webcam 
-                className="w-full h-full rounded"
+                className="h-[200px] md:h-[300px] w-full aspect-video object-cover rounded scale-x-[-1] md:scale-x-[1]"
                 ref={webcamRef}
                 audio={false}
                 height={720}
@@ -77,7 +78,7 @@ function CameraRoom() {
                 videoConstraints={{
                   width: 1280,
                   height: 720,
-                  facingMode: "user"
+                  facingMode: "user",
                 }}
               />
             </div>
@@ -108,11 +109,15 @@ function CameraRoom() {
           </section>
           { images.length > 0 && 
             <section className="w-11/12 md:w-full mx-auto mt-8 ">
-              <div className="w-full bg-white p-2 rounded shadow-md flex flex-col md:flex-row gap-4 items-end">
+              <div className="bg-white w-11/12 mx-auto p-4 rounded shadow-md h-min flex flex-col md:flex-row gap-4 items-end">
                 { images.map((imageSrc: string) => (
-                    <div className="rounded overflow-hidden flex-1 md:max-w-1/5 bg-red-400 aspect-video border">
-                      <img src={imageSrc} alt="" className="w-full h-full object-cover"/>
+
+                    <div className="bg-white relative">
+                      <img src={imageSrc} alt="" className="h-[200px] md:h-[300px] w-full aspect-video object-cover rounded scale-x-[-1] md:scale-x-[1]"/>
                     </div>
+                    // <div className="rounded  overflow-hidden md:max-w-1/5 bg-red-400 border">
+                    //   <img src={imageSrc} alt="" className="w-full h-full object-cover scale-x-[-1]"/>
+                    // </div>
                   ))
                 }
                 { noImageSlot && 
