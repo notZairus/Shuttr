@@ -11,7 +11,7 @@ function App() {
         <Switch>
           <Route path="/" component={LandingPage} />
           <Route path="/camera" component={CameraRoom} />
-          <Route path="/customize" component={Customize}/>
+          <Route path="/customize" component={Customize} />
         </Switch>
       </AppLayout>
     </>
