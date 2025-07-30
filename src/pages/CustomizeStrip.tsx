@@ -59,7 +59,7 @@ function CustomizeStrip() {
                 }}
               >
                 { images.map((image: string) => (
-                    <div className={cn("w-full aspect-15/9 border-[0.5px] border-white overflow-hidden flex items-center scale-x-[-1]", imageShape)}>
+                    <div className={cn("w-full aspect-15/9 border-[0.5px] border-white overflow-hidden flex items-center", imageShape)}>
                       {/* <div className={cn("w-full aspect-15/9 border  borde-woverflow-hidden")}
                         style={{
                           transform: 'scale(-1, 1)',
@@ -68,7 +68,7 @@ function CustomizeStrip() {
                           backgroundPosition: 'center'
                         }}
                       /> */}
-                      <img src={image} className="w-full"/>
+                      <img src={image} className="w-full" style={{ transform: "scale(-1, 1)", }}/>
                     </div>
                   ))
                 }
