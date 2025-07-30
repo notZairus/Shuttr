@@ -46,7 +46,6 @@ function CustomizeStrip() {
 
   return (
     <>
-      
       <div className="w-full">
         <div className="w-3/4 h-full mx-auto flex flex-col md:flex-row gap-9 md:gap-4 pt-12 pb-20 mt:pb-0">
           <div className="flex-1">
@@ -61,21 +60,23 @@ function CustomizeStrip() {
               >
                 { images.map((image: string) => (
                     <div className={cn("w-full aspect-15/9 overflow-hidden", imageShape)}>
-                      <img src={image} className={cn("w-full h-full object-fit")}/>
+                      <img src={image} className={cn("w-full h-full object-cover")}/>
                     </div>
                   ))
                 }
-                <div className="mt-2" style={{
+                <div className="mt-2 h-min" style={{
                   background: frameBG.fontColor === "#000000" ? "#FFFFFF50" : "#00000050"
                 }}>
-                  <p 
-                    className="text-[8px] text-center font-semibold h-4"
-                    style={{
-                      color: frameBG.fontColor
-                    }}
-                  >
-                    { showDate && getFullDate() }
-                  </p>
+                  { showDate && 
+                    <p 
+                      className="text-[8px] text-center font-semibold h-4"
+                      style={{
+                        color: frameBG.fontColor
+                      }}
+                    >
+                      { getFullDate() }
+                    </p>
+                  }
                   <p 
                     className="text-xs font-bold text-center"
                     style={{
