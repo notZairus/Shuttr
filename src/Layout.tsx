@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <button className="cursor-pointer">Home</button>
                     </Link>
 
-                    <Link href="#">
+                    <Link href="/about">
                         <button className="cursor-pointer">About</button>
                     </Link>
 
