@@ -52,7 +52,7 @@ function CustomizeStrip() {
           
             <div className="w-min border mx-auto">
               <div 
-                className="w-[160px] md:w-[180px] mx-auto space-y-1 p-2"
+                className="w-[160px] md:w-[180px] h-min mx-auto space-y-1 p-2 pb-4"
                 ref={stripRef}
                 style={{
                   background: frameBG.frameBG
@@ -60,8 +60,9 @@ function CustomizeStrip() {
               >
                 { images.map((image: string) => (
                     <div className={cn("w-full aspect-15/9 overflow-hidden", imageShape)}>
-                      <div className={cn("w-full aspect-15/9 scale-x-[-1]")}
+                      <div className={cn("w-full aspect-15/9")}
                         style={{
+                          transform: 'scale(-1, 1)',
                           backgroundImage: `url(${image})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center'
@@ -70,9 +71,7 @@ function CustomizeStrip() {
                     </div>
                   ))
                 }
-                <div className="mt-2 h-min" style={{
-                  background: frameBG.fontColor === "#000000" ? "#FFFFFF50" : "#00000050"
-                }}>
+                <div className="mt-2 h-min">
                   { showDate && 
                     <p 
                       className="text-[8px] text-center font-semibold h-4"
