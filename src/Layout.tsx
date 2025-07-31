@@ -1,13 +1,11 @@
 import { Link } from "wouter";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import CustomSidebarTrigger from "@/components/custom-sidebar-trigger";
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
     return (
         <>
             <SidebarProvider open={false}>
@@ -16,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <header className="w-full py-4 h-16 justify-between items-center px-4 md:px-8 bg-foreground text-background shadow
                     flex absolute
                 ">
-                    <h1 className="text-xl md:text-2xl font-black font-mono">Shuttr.</h1>
+                    <h1 className="opacity-0 md:opacity-1 text-xl md:text-2xl font-black font-mono">Shuttr.</h1>
 
                     {/* visible on desktop */}
                     <nav className="justify-center items-center gap-8 hidden md:flex">
@@ -33,11 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                     {/* visible on mobile */}
                     <div className="md:hidden text-2xl font-black font-mono">
-                        <SidebarTrigger>
-                            <Button variant="ghost">
-                                <Menu className="size-max"/>
-                            </Button>
-                        </SidebarTrigger>
+                        <CustomSidebarTrigger />  
                     </div>
                 </header>
                 
