@@ -4,10 +4,10 @@ import { Menu } from "lucide-react";
 
 export default function CustomSidebarTrigger() {
     const { toggleSidebar } = useSidebar();
-    
+
     return (
-        <Button onClick={toggleSidebar}>
-            <Menu />
+        <Button onClick={toggleSidebar} >
+            <Menu/>
         </Button>
     )
 }

@@ -34,9 +34,6 @@ export function AppSidebar() {
     >
       <SidebarContent>
         <SidebarGroup>
-          <SidebarHeader>
-            <h1 className="text-xl md:text-2xl font-black font-mono">Shuttr.</h1>
-          </SidebarHeader>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
