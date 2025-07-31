@@ -68,7 +68,7 @@ function CameraRoom() {
 
   return (
     <>
-      <div className="w-full min-h-full pb-12 md:py-12 bg-black/5 ">
+      <div className="w-full min-h-full pb-12 py-12 bg-black/5 ">
         <div className="md:max-w-4xl mx-auto">
           <section className="flex-col px-4 md:px-0 md:flex-row flex gap-8 mx-auto">
             <div className="bg-white rounded shadow p-2 relative">
