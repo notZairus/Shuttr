@@ -41,7 +41,7 @@
   --font-mono: Space Mono, monospace;
 
   --radius: 0px;
-  
+
   --shadow-2xs: 4px 4px 0px 0px oklch(0.00 0 0 / 0.50);
   --shadow-xs: 4px 4px 0px 0px oklch(0.00 0 0 / 0.50);
   --shadow-sm: 4px 4px 0px 0px oklch(0.00 0 0 / 1.00), 4px 1px 2px -1px oklch(0.00 0 0 / 1.00);
@@ -50,7 +50,7 @@
   --shadow-lg: 4px 4px 0px 0px oklch(0.00 0 0 / 1.00), 4px 4px 6px -1px oklch(0.00 0 0 / 1.00);
   --shadow-xl: 4px 4px 0px 0px oklch(0.00 0 0 / 1.00), 4px 8px 10px -1px oklch(0.00 0 0 / 1.00);
   --shadow-2xl: 4px 4px 0px 0px oklch(0.00 0 0 / 2.50);
-  
+
 }
 
 .dark {
@@ -85,7 +85,7 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-border: oklch(1.00 0 0);
   --sidebar-ring: oklch(0.70 0.19 23.04);
-  
+
   --shadow-2xs: 0 1px 3px 0px oklch(0.00 0 0 / 0.05);
   --shadow-xs: 0 1px 3px 0px oklch(0.00 0 0 / 0.05);
   --shadow-sm: 0 1px 3px 0px oklch(0.00 0 0 / 0.10), 0 1px 2px -1px oklch(0.00 0 0 / 0.10);
@@ -157,7 +157,18 @@
   }
 }
 
-
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+
+  }
+  body {
+    @apply bg-background text-foreground;
+
+  }
+
 }
