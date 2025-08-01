@@ -30,8 +30,25 @@ function CustomizeStrip() {
   async function downloadStrip() {
     if (!stripRef.current) return;
 
-    domtoimage.toPng(stripRef.current)
-    .then(function (dataUrl: string) {
+    const node: any = stripRef.current;
+
+    const scale = window.devicePixelRatio || 2;
+
+    const style = {
+      transform: `scale(${scale})`,
+      transformOrigin: "top left",
+      width: `${node.offsetWidth}px`,
+      height: `${node.offsetHeight}px`,
+    };
+
+    const param = {
+      width: node.offsetWidth * scale,
+      height: node.offsetHeight * scale,
+      style,
+      filter: (node: any) => node.tagName !== 'i' // Optional: exclude icons or unwanted nodes
+    };
+
+    domtoimage.toPng(node, param).then(function (dataUrl: string) {
       const a: any = document.createElement('a');
       a.href = dataUrl;
       a.download = "shuttr.png";
@@ -65,7 +82,7 @@ function CustomizeStrip() {
               >
                 { images.map((image) => (
                     <div className={cn("w-full aspect-15/9 overflow-hidden flex items-center", imageShape)}>
-                      <img src={image.image} className={cn("w-full", image.filter)} style={{ transform: "scale(-1, 1)", filter: "grayscale(100%)" }}/>
+                      <img src={image.image} className={cn("w-full", image.filter)} style={{ transform: "scale(-1, 1)" }}/>
                     </div>
                   ))
                 }
