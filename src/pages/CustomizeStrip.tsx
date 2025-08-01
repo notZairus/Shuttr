@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { availableFrames, imageShapes } from "@/configs";
 import { Button } from "@/components/ui/button.tsx";
 import { Switch } from "@/components/ui/switch";
-import html2canvas from "html2canvas";
+import domtoimage from 'dom-to-image';
 
 
 
@@ -30,12 +30,17 @@ function CustomizeStrip() {
   async function downloadStrip() {
     if (!stripRef.current) return;
 
-    const canvasStrip: any = await html2canvas(stripRef.current);
-    const a: any = document.createElement('a');
-    a.href = canvasStrip.toDataURL(('image/png'));
-    a.download = "shuttr.png";
-    a.target = "blank";
-    a.click();
+    domtoimage.toPng(stripRef.current)
+    .then(function (dataUrl: string) {
+      const a: any = document.createElement('a');
+      a.href = dataUrl;
+      a.download = "shuttr.png";
+      a.target = "blank";
+      a.click();
+    })
+    .catch(function (error: any) {
+        console.error('oops, something went wrong!', error);
+    });
   }
 
   useEffect(() => {
@@ -60,7 +65,7 @@ function CustomizeStrip() {
               >
                 { images.map((image) => (
                     <div className={cn("w-full aspect-15/9 overflow-hidden flex items-center", imageShape)}>
-                      <img src={image.image} className={cn("w-full", image.filter)} style={{ transform: "scale(-1, 1)", }}/>
+                      <img src={image.image} className={cn("w-full", image.filter)} style={{ transform: "scale(-1, 1)", filter: "grayscale(100%)" }}/>
                     </div>
                   ))
                 }
