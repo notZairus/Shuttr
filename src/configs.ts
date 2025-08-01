@@ -74,3 +74,40 @@ export const imageShapes = [
     "rounded rounded-bl-4xl",
     "rounded rounded-br-4xl",
 ]
+
+
+
+export const filters = [
+  "filter",            // Enables filter
+  "filter-none",       
+
+  // Blur
+  "blur-[1px]",
+
+  // Brightness
+  "brightness-150",
+  "brightness-200",
+
+  // Contrast
+  "contrast-125",
+  "contrast-150",
+  "contrast-200",
+
+  // Grayscale
+  "grayscale grayscale-400",
+
+  // Invert
+  "invert",
+
+  // Sepia
+  "filter sepia",
+
+  // Hue Rotate
+  "hue-rotate-90",
+  "hue-rotate-180",
+
+  // Saturate
+  "saturate-0",
+  "saturate-150",
+  "saturate-200",
+];

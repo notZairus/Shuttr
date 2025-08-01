@@ -5,43 +5,7 @@ import { Image, Images, Trash, Pause } from "lucide-react";
 import { useImageContext } from "@/contexts/ImageContext";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-
-
-const filters = [
-  "filter",            // Enables filter
-  "filter-none",       
-
-  // Blur
-  "blur-[1px]",
-
-  // Brightness
-  "brightness-150",
-  "brightness-200",
-
-  // Contrast
-  "contrast-125",
-  "contrast-150",
-  "contrast-200",
-
-  // Grayscale
-  "grayscale grayscale-400",
-
-  // Invert
-  "invert",
-
-  // Sepia
-  "filter sepia",
-
-  // Hue Rotate
-  "hue-rotate-90",
-  "hue-rotate-180",
-
-  // Saturate
-  "saturate-0",
-  "saturate-150",
-  "saturate-200",
-];
-
+import { filters } from "@/configs";
 
 
 interface ReactWebcam {
@@ -145,7 +109,7 @@ function CameraRoom() {
                         className="border h-full rounded-full w-12 aspect-square overflow-y-hidden"
                         onClick={() => setFilter(filter)}
                       >
-                        <img src="src/images/image copy.png" className={cn("object-cover w-full h-full", filter)} />  
+                        <img src="/image copy.png" className={cn("object-cover w-full h-full", filter)} />  
                       </div>
                     ))
                   }
