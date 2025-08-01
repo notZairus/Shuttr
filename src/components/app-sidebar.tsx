@@ -31,7 +31,7 @@ export function AppSidebar() {
       side="right" 
       variant="floating"
     >
-      <SidebarContent>
+      <SidebarContent className="bg-background">
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>

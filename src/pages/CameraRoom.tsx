@@ -4,6 +4,44 @@ import { Button } from "@/components/ui/button";
 import { Image, Images, Trash, Pause } from "lucide-react";
 import { useImageContext } from "@/contexts/ImageContext";
 import { useLocation } from "wouter";
+import { cn } from "@/lib/utils";
+
+
+const filters = [
+  "filter",            // Enables filter
+  "filter-none",       
+
+  // Blur
+  "blur-[1px]",
+
+  // Brightness
+  "brightness-150",
+  "brightness-200",
+
+  // Contrast
+  "contrast-125",
+  "contrast-150",
+  "contrast-200",
+
+  // Grayscale
+  "grayscale grayscale-400",
+
+  // Invert
+  "invert",
+
+  // Sepia
+  "filter sepia",
+
+  // Hue Rotate
+  "hue-rotate-90",
+  "hue-rotate-180",
+
+  // Saturate
+  "saturate-0",
+  "saturate-150",
+  "saturate-200",
+];
+
 
 
 interface ReactWebcam {
@@ -26,6 +64,7 @@ function CameraRoom() {
   const [timer, setTimer] = useState(0);
   const [taking, setTaking] = useState(false);
   const takingRef = useRef(false);
+  const [filter, setFilter] = useState('filter-none');
 
   const noImageSlot = images.length === 4;
 
@@ -34,7 +73,8 @@ function CameraRoom() {
     if (noImageSlot) return;
 
     const imgSrc = webcamRef.current.getScreenshot();
-    setImages(images => [...images, imgSrc]);
+    const image = { image: imgSrc, filter: filter };
+    setImages(images => [...images, image]);
   }
 
   function pause() {
@@ -84,7 +124,7 @@ function CameraRoom() {
               )}
 
               <Webcam 
-                className="h-[200px] md:h-[300px] w-full aspect-video object-cover rounded scale-x-[-1] md:scale-x-[1]"
+                className={cn("h-[200px] md:h-[300px] w-full aspect-video object-cover rounded scale-x-[-1] md:scale-x-[1]", filter)}
                 ref={webcamRef}
                 audio={false}
                 height={720}
@@ -96,6 +136,22 @@ function CameraRoom() {
                   facingMode: "user",
                 }}
               />
+
+              <div className="mt-2">
+                <p>Filters: </p>
+                <div className="w-full flex gap-2 items-start flex-wrap justify-start">
+                  { filters.map(filter => (
+                      <div 
+                        className="border h-full rounded-full w-12 aspect-square overflow-y-hidden"
+                        onClick={() => setFilter(filter)}
+                      >
+                        <img src="src/images/image copy.png" className={cn("object-cover w-full h-full", filter)} />  
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+
             </div>
             <div className="flex-1 flex flex-col gap-4 items-center">
 
@@ -133,12 +189,14 @@ function CameraRoom() {
 
             </div>
           </section>
+
+
           { images.length > 0 && 
             <section className="w-11/12 md:w-full mx-auto mt-8 ">
               <div className="bg-white p-4 rounded shadow-md h-min flex flex-col md:flex-row gap-4 items-end">
-                { images.map((imageSrc: string) => (
+                { images.map((image) => (
                     <div className="rounded aspect-video flex-1 overflow-hidden md:max-w-1/5 bg-red-400 border">
-                      <img src={imageSrc} alt="" className="w-full h-full object-cover scale-x-[-1]"/>
+                      <img src={image.image} alt="" className={cn("w-full h-full object-cover scale-x-[-1]", image.filter)}/>
                     </div>
                   ))
                 }
@@ -158,6 +216,8 @@ function CameraRoom() {
               </div>
             </section>
           }
+
+
         </div>
       </div>
     </>

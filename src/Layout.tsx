@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     flex absolute
                 ">
                     <Link href="/">
-                        <h1 className="text-xl md:text-2xl font-black font-mono">Shuttr.</h1>
+                        <h1 className="text-2xl font-black">Shuttr.</h1>
                     </Link>
 
                     {/* visible on desktop */}

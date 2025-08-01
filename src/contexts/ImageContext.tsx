@@ -1,16 +1,21 @@
 import { createContext, useContext, useState } from "react";
 
+type Image = {
+  image: string,
+  filter: string,
+}
+
 
 type ImageContextType = {
-    images: string[],
-    setImages: React.Dispatch<React.SetStateAction<string[]>>
+    images: Image[],
+    setImages: React.Dispatch<React.SetStateAction<Image[]>>
 }
 
 const imageContext = createContext<ImageContextType | undefined>(undefined);
 
 
 export const ImageContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [images, setImages] = useState<string []>([]);
+    const [images, setImages] = useState<Image []>([]);
 
     return (
         <imageContext.Provider value={{ images, setImages }}>

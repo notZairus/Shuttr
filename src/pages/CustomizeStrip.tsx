@@ -58,9 +58,9 @@ function CustomizeStrip() {
                   background: frameBG.frameBG
                 }}
               >
-                { images.map((image: string) => (
+                { images.map((image) => (
                     <div className={cn("w-full aspect-15/9 overflow-hidden flex items-center", imageShape)}>
-                      <img src={image} className="w-full" style={{ transform: "scale(-1, 1)", }}/>
+                      <img src={image.image} className={cn("w-full", image.filter)} style={{ transform: "scale(-1, 1)", }}/>
                     </div>
                   ))
                 }

@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+@font-face {
+  font-family: "qs";
+  src: url("@/fonts/Quicksand-VariableFont_wght.ttf") format('truetype');
+}
+
 :root {
   --background: #f4f4dc;
   --foreground: #564614;
@@ -148,12 +154,18 @@
   --shadow-2xl: var(--shadow-2xl);
 }
 
+@layer utilities {
+  .font-qs {
+    font-family: "qs", sans-serif;
+  }
+}
+
 @layer base {
   * {
     @apply outline-ring/50;
   }
   body {
-    @apply font-mono bg-background;
+    @apply bg-background tracking-widest;
   }
 }
 

@@ -7,8 +7,8 @@ export default function LandingPage() {
 
     return (
         <>
-            <section className="w-full h-full flex flex-col justify-center items-center">
-                <h1 className="text-5xl sm:text-7xl font-bold text-center">Shuttr.</h1>
+            <section className="w-full h-full flex flex-col justify-center items-center px-8">
+                <h1 className="text-6xl font-semibold text-center">Shuttr.</h1>
                 <h2 className="text-center text-2xl">
                     free photobooth for everyone!
                 </h2>  
