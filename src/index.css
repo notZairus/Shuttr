@@ -153,7 +153,7 @@
     @apply outline-ring/50;
   }
   body {
-    @apply font-mono;
+    @apply font-mono bg-background;
   }
 }
 
